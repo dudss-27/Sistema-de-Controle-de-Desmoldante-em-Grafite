@@ -1,0 +1,17 @@
+function doGet(e) {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = ss.getSheetByName("Dados") || ss.insertSheet("Dados");
+
+  // Cria cabeçalho se estiver vazio
+  if (sheet.getLastRow() === 0) {
+    sheet.appendRow(["Timestamp", "Temperatura", "Pressao", "Altitude"]);
+  }
+
+  const temp = e.parameter.temp;
+  const pres = e.parameter.press;
+  const alt  = e.parameter.alt;
+
+  sheet.appendRow([new Date(), temp, pres, alt]);
+
+  return ContentService.createTextOutput("OK");
+}
